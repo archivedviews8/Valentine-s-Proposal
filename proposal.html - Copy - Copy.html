@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For Rutu ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Poppins,sans-serif;
+}
+
+body{
+  height:100vh;
+  overflow:hidden;
+  background:linear-gradient(135deg,#ff9a9e,#fad0c4);
+}
+
+/* pages */
+.page{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:20px;
+  transition:1s;
+}
+.hidden{
+  opacity:0;
+  pointer-events:none;
+  transform:scale(.9);
+}
+
+h1{
+  color:#fff;
+  font-size:3rem;
+  margin-bottom:20px;
+}
+p{
+  color:#fff;
+  font-size:1.3rem;
+  max-width:650px;
+  line-height:1.6;
+  margin-bottom:25px;
+}
+
+/* buttons */
+.buttons{
+  position:relative;
+  width:360px;
+  height:60px;
+}
+
+button{
+  padding:15px 35px;
+  font-size:1.1rem;
+  border:none;
+  border-radius:30px;
+  cursor:pointer;
+}
+
+#yesBtn{
+  background:#ff4b5c;
+  color:white;
+  position:absolute;
+  left:0;
+  box-shadow:0 10px 25px rgba(255,75,92,.5);
+  transition:.3s;
+}
+#yesBtn:hover{
+  transform:scale(1.1);
+}
+
+#noBtn{
+  background:white;
+  color:#ff4b5c;
+  position:absolute;
+  left:190px;
+  font-weight:bold;
+  animation:wiggle 1.5s infinite;
+}
+
+@keyframes wiggle{
+  0%{transform:rotate(0)}
+  25%{transform:rotate(2deg)}
+  50%{transform:rotate(-2deg)}
+  75%{transform:rotate(2deg)}
+  100%{transform:rotate(0)}
+}
+
+/* hearts */
+.heart{
+  position:absolute;
+  bottom:-20px;
+  font-size:24px;
+  animation:floatUp 6s linear infinite;
+}
+@keyframes floatUp{
+  0%{transform:translateY(0);opacity:0}
+  20%{opacity:1}
+  100%{transform:translateY(-120vh) scale(1.5);opacity:0}
+}
+
+/* blush */
+.blush{
+  position:absolute;
+  font-size:1.5rem;
+  animation:floatBlush 1.2s forwards;
+  pointer-events:none;
+}
+@keyframes floatBlush{
+  from{opacity:1;transform:translateY(0) scale(1)}
+  to{opacity:0;transform:translateY(-40px) scale(1.4)}
+}
+
+/* celebration */
+.celebrate{
+  font-size:4rem;
+  animation:pop 1.2s infinite alternate;
+}
+@keyframes pop{
+  from{transform:scale(1)}
+  to{transform:scale(1.1)}
+}
+.confetti{
+  position:absolute;
+  width:10px;
+  height:10px;
+  animation:fall 4s linear infinite;
+}
+@keyframes fall{
+  from{transform:translateY(-10vh) rotate(0)}
+  to{transform:translateY(110vh) rotate(360deg)}
+}
+
+/* hug */
+.hug{
+  font-size:5rem;
+  animation:hugAnim 2s infinite;
+}
+@keyframes hugAnim{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.15)}
+  100%{transform:scale(1)}
+}
+
+/* slideshow page */
+.slideshow-container{
+  position:relative;
+  width:100%;
+  height:100%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+  background:black;
+}
+.slide-text {
+  position: absolute;
+  bottom: 30px;          /* distance from bottom */
+  left: 50%;             /* center horizontally */
+  transform: translateX(-50%);
+  color: white;
+  font-size: 2rem;
+  text-shadow: 2px 2px 10px rgba(0,0,0,0.7); /* makes text readable */
+  text-align: center;
+  padding: 10px 20px;
+  border-radius: 10px;
+  background: rgba(0,0,0,0.3);  /* semi-transparent background for better contrast */
+}
+.slide{
+  position:absolute;
+  width:100%;
+  height:100%;
+  opacity:0;
+  transition:opacity 1s ease-in-out;
+  background-size:contain;      /* <- shows full image */
+  background-position:center;
+  background-repeat:no-repeat;  /* <- prevents tiling */
+}
+.active{
+  opacity:1;
+}
+</style>
+</head>
+
+<body>
+
+<audio id="bgMusic" loop>
+  <source src="https://cdn.pixabay.com/audio/2023/02/28/audio_63c94c84cc.mp3" type="audio/mpeg">
+</audio>
+
+<!-- PAGE 1 -->
+<div class="page" id="page1">
+  <h1>Hey Rutu ❤️</h1>
+  <p id="typingText"></p>
+  <p>So today, on Propose Day, I want to ask will you be my Valentine ?</p>
+
+  <div class="buttons">
+    <button id="yesBtn">YES 💖</button>
+    <button id="noBtn">NO 🙈</button>
+  </div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page hidden" id="page2">
+  <h1>YES!!! 💍💖</h1>
+  <div class="celebrate">🥰🎉💃🕺🎉🥰</div>
+  <p>
+    Rutu, you just made me the happiest person alive.  
+    I promise to love you, protect you, and stand by you forever ❤️
+  </p>
+  <button id="nextBtn">One More Thing 💌</button>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page hidden" id="page3">
+  <div class="hug">🫂🤍</div>
+  <h1>Come Here, Baby 🥹</h1>
+  <p>
+    This hug is just the beginning.  
+    No matter what life brings,  
+    I’ll always be right here — holding you 🤍
+  </p>
+  <button id="slideshowBtn">View Our Memories 💖</button>
+</div>
+
+<!-- PAGE 4 SLIDESHOW -->
+<div class="page hidden" id="page4">
+  <div class="slideshow-container">
+
+   	<div class="slide active" style="background-image:url('images/IMG_1.jpg');"><div class="slide-text">Our first (movie) date❤️</div></div>
+	 <div class="slide" style="background-image:url('images/IMG_2.jpg');"><div class="slide-text">Our first bike ride (after having best biryani)❤️</div></div>
+<div class="slide" style="background-image:url('images/IMG_3.jpg');"><div class="slide-text">❤️</div></div>
+<div class="slide" style="background-image:url('images/IMG_4.jpg');"><div class="slide-text">Our first Pasta Date at Cafe Peter❤️</div></div>
+<div class="slide" style="background-image:url('images/IMG_5.jpg');"><div class="slide-text">Our first long drive date to lonavala and then all the trouble ending with relief❤️</div></div>
+<div class="slide" style="background-image:url('images/IMG_6.jpeg');"><div class="slide-text">Happy faces when met after 2 months❤️</div></div>
+<div class="slide" style="background-image:url('images/IMG_7.jpeg');"><div class="slide-text">Happy faces when met after 2 months❤️</div></div>
+<div class="slide" style="background-image:url('images/IMG_8.jpeg');"><div class="slide-text">Happy faces when met after 2 months❤️</div></div>
+<div class="slide" style="background-image:url('images/IMG_9.jpeg');"><div class="slide-text">Happy faces when met after 2 months❤️</div></div>
+<div class="slide" style="background-image:url('images/IMG_10.jpeg');"><div class="slide-text">I love You Rutu❤️ I wish we stay together forever❤️</div></div>
+
+    <!-- Add more slides with your pictures -->
+  </div>
+</div>
+
+<script>
+/* typing */
+const text="Rutu, from the moment you came into my life, everything changed. Your smile became my favorite view, and your happiness became my priority. I can't imagine my future without you ❤️";
+let idx=0;
+function type(){
+  if(idx<text.length){
+    typingText.innerHTML+=text.charAt(idx++);
+    setTimeout(type,45);
+  }
+}
+type();
+
+/* elements */
+const noBtn=document.getElementById("noBtn");
+const yesBtn=document.getElementById("yesBtn");
+const nextBtn=document.getElementById("nextBtn");
+const slideshowBtn=document.getElementById("slideshowBtn");
+const page1=document.getElementById("page1");
+const page2=document.getElementById("page2");
+const page3=document.getElementById("page3");
+const page4=document.getElementById("page4");
+const music=document.getElementById("bgMusic");
+
+/* NO button run away */
+function moveNo(){
+  const pad=20;
+  const x=Math.random()*(window.innerWidth-noBtn.offsetWidth-pad);
+  const y=Math.random()*(window.innerHeight-noBtn.offsetHeight-pad);
+  noBtn.style.left=x+"px";
+  noBtn.style.top=y+"px";
+}
+noBtn.addEventListener("mouseenter",moveNo);
+noBtn.addEventListener("click",moveNo);
+
+/* YES blush */
+yesBtn.addEventListener("mouseenter",()=>{
+  for(let i=0;i<3;i++){
+    const b=document.createElement("div");
+    b.className="blush";
+    b.innerText="😊💖";
+    b.style.left=yesBtn.getBoundingClientRect().left+Math.random()*50+"px";
+    b.style.top=yesBtn.getBoundingClientRect().top+"px";
+    document.body.appendChild(b);
+    setTimeout(()=>b.remove(),1200);
+  }
+});
+
+/* YES click */
+yesBtn.addEventListener("click",()=>{
+  page1.classList.add("hidden");
+  page2.classList.remove("hidden");
+  music.play();
+  confetti();
+});
+
+/* next */
+nextBtn.addEventListener("click",()=>{
+  page2.classList.add("hidden");
+  page3.classList.remove("hidden");
+});
+
+/* slideshow page */
+slideshowBtn.addEventListener("click",()=>{
+  page3.classList.add("hidden");
+  page4.classList.remove("hidden");
+  startSlideshow();
+});
+
+/* hearts */
+setInterval(()=>{
+  const h=document.createElement("div");
+  h.className="heart";
+  h.innerText="❤️";
+  h.style.left=Math.random()*100+"vw";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),6000);
+},300);
+
+/* confetti */
+function confetti(){
+  for(let i=0;i<80;i++){
+    const c=document.createElement("div");
+    c.className="confetti";
+    c.style.left=Math.random()*100+"vw";
+    c.style.background=`hsl(${Math.random()*360},100%,50%)`;
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),5000);
+  }
+}
+
+/* slideshow logic */
+let slideIndex=0;
+function startSlideshow(){
+  const slides=document.querySelectorAll(".slide");
+  setInterval(()=>{
+    slides[slideIndex].classList.remove("active");
+    slideIndex=(slideIndex+1)%slides.length;
+    slides[slideIndex].classList.add("active");
+  },3000);
+}
+</script>
+
+</body>
+</html>
